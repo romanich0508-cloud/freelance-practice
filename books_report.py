@@ -48,5 +48,16 @@ for cell in top[1]:
     cell.font = Font(bold=True)
 top.column_dimensions["A"].width = 60
 
+books_by_rating = workbook.create_sheet("Кількість книг за рейтингом")
+books_by_rating.append(["Рейтинг", "Кількість"])
+counts = {}
+for book in books:
+    if book["rating"] in counts:
+        counts[book["rating"]] += 1
+    else:
+        counts[book["rating"]] = 1
+for key, value in counts.items():
+    books_by_rating.append([key, value])
+
 workbook.save("books_report.xlsx")
 print("Готово! файл books_report.xlsx створено.")
