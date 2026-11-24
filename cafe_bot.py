@@ -12,12 +12,20 @@ def main_keyboard():
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
     keyboard.add("☕ Меню", "📍 Адреса")
     keyboard.add("🕒 Години роботи")
+    keyboard.add("📞 Контакти")
     return keyboard
 @bot.message_handler(commands=["start"])
-def send_welkome(message):
+def send_welcome(message):
     bot.send_message(
         message.chat.id,
         "Вітаємо в кав'ярні «Зерно»! Оберіть, що вас цікавить:",
+        reply_markup=main_keyboard(),
+    )
+@bot.message_handler(commands=["help"])
+def send_helper(message):
+    bot.send_message(
+        message.chat.id,
+        "Вітаємо! Раді бачити вас у нашому боті. Тут можна легко переглянути актуальне меню, дізнатися графік роботи, знайти нашу адресу та зберегти контакти для зв'язку. Обирайте, що цікавить!",
         reply_markup=main_keyboard(),
     )
 @bot.message_handler(content_types=["text"])
@@ -30,6 +38,8 @@ def handle_text(message):
         answer = "Вул. Львівська, 1"
     elif text == "🕒 Години роботи":
         answer = "Щодня з 8:00 до 21:00"
+    elif text == "📞 Контакти":
+        answer = "+380 00 000 0000" 
     else:
         answer = "Натисніть одну з кнопок нижче 👇"
 
