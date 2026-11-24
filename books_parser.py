@@ -25,14 +25,15 @@ for page_number in range(1, 51):
         title = book.h3.a["title"]
         price = book.select_one("p.price_color").text
         rating = book.select_one("p.star-rating")["class"][1]
-        result.append([title, price, rating])
+        availability = book.select_one("p.instock.availability").text
+        result.append([title, price, rating, availability.strip()])
        
     print("Сторінка", page_number, "готова")
     time.sleep(0.5)
 
 with open("books.csv", "w", newline="", encoding="utf-8-sig") as file:
     writer = csv.writer(file)
-    writer.writerow(["Назва", "Ціна", "Рейтинг"])
+    writer.writerow(["Назва", "Ціна", "Рейтинг", "Наявність"])
     writer.writerows(result)
 
 print("Готово! Збережено книг:", len(result))
